@@ -51,11 +51,11 @@ export default function Footer() {
                 href="https://chat.whatsapp.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-teal-400 px-6 py-3 font-inter text-sm font-bold text-neutral-950 shadow-lg shadow-emerald-500/20 transition-all duration-300 hover:scale-105 hover:shadow-emerald-500/30"
+                className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-b from-white via-slate-100 to-slate-200 px-6 py-3 font-inter text-sm font-bold text-neutral-950 shadow-lg shadow-white/10 transition-all duration-300 hover:scale-105"
               >
                 <FaWhatsapp className="h-5 w-5 text-neutral-950" />
                 <span>Join WhatsApp Community</span>
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-950 text-emerald-400 shadow-inner transition-transform group-hover:translate-x-0.5">
+                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-900 text-white shadow-inner transition-transform group-hover:translate-x-0.5">
                   <ArrowRight className="h-3.5 w-3.5" />
                 </div>
               </a>
