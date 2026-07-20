@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { motion, useInView } from "framer-motion";
-import { ArrowRight, Terminal } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import LazyVideo from "@/components/ui/LazyVideo";
@@ -175,26 +175,6 @@ export default function LandingSection() {
           <a href="#universe" className="btn-secondary px-7 py-3.5">
             <span>Explore Universe</span>
           </a>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.0, delay: 0.7 }}
-          className="mt-16 flex flex-wrap items-center justify-center gap-3 text-xs font-inter font-medium text-slate-400"
-        >
-          <div className="flex items-center gap-2 rounded-xl glass-surface px-3.5 py-2">
-            <Terminal className="h-3.5 w-3.5 text-slate-300" />
-            <span>AI & AUTOMATION</span>
-          </div>
-          <div className="flex items-center gap-2 rounded-xl glass-surface px-3.5 py-2">
-            <span className="h-2 w-2 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.5)]" />
-            <span>STARTUP INCUBATOR</span>
-          </div>
-          <div className="flex items-center gap-2 rounded-xl glass-surface px-3.5 py-2">
-            <span className="h-2 w-2 rounded-full bg-aurora-cyan shadow-[0_0_8px_rgba(6,182,212,0.5)]" />
-            <span>ZERO-TO-ONE BUILDING</span>
-          </div>
         </motion.div>
       </div>
     </section>

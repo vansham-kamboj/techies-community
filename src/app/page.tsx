@@ -1,9 +1,9 @@
 import React from "react";
 import LandingSection from "@/components/hero/LandingSection";
 import TechiesUniverseSection from "@/components/universe/TechiesUniverseSection";
-import PathLessChosenSection from "@/components/storytelling/PathLessChosenSection";
+import AboutTechiesSection from "@/components/about/AboutTechiesSection";
 import TechPassSection from "@/components/techpass/TechPassSection";
-import CommunityJourneySection from "@/components/journey/CommunityJourneySection";
+import FuturisticFAQSection from "@/components/faq/FuturisticFAQSection";
 import CommunityHighlightsSection from "@/components/highlights/CommunityHighlightsSection";
 
 export default function Home() {
@@ -15,14 +15,14 @@ export default function Home() {
       {/* 2. Signature 3D Techies Universe Galaxy Section */}
       <TechiesUniverseSection />
 
-      {/* 3. Cinematic Scroll Storytelling Section */}
-      <PathLessChosenSection />
+      {/* 3. Premium Asymmetrical About Techies Section */}
+      <AboutTechiesSection />
 
       {/* 4. Futuristic TechPass Identity Card Generator */}
       <TechPassSection />
 
-      {/* 5. Interactive Roadmap & Community Journey */}
-      <CommunityJourneySection />
+      {/* 5. Futuristic Expandable FAQ Experience */}
+      <FuturisticFAQSection />
 
       {/* 6. Premium Community Highlights & Showcase */}
       <CommunityHighlightsSection />
