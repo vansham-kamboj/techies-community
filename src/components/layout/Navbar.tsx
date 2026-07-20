@@ -56,14 +56,8 @@ export default function Navbar() {
                   handleLogoClick();
                 }
               }}
-              className="group relative flex items-center gap-2.5 text-left focus:outline-none"
+              className="group relative text-left focus:outline-none"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/logo.png"
-                alt="Techies Community Logo"
-                className="h-5 sm:h-[22px] w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-              />
               <span className="font-jakarta text-xl sm:text-2xl font-bold tracking-tight text-white transition-opacity group-hover:opacity-90">
                 Techies<span className="text-slate-400 font-normal">Community</span>
               </span>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Sparkles, Shield, QrCode, Globe, CheckCircle2, Award } from "lucide-react";
+import { Shield, QrCode, Globe, CheckCircle2, Award } from "lucide-react";
 import { FaInstagram, FaLinkedin, FaGithub, FaWhatsapp } from "react-icons/fa6";
 
 export interface TechPassData {
@@ -151,9 +151,10 @@ export default function TechPassCard({ data, theme, cardRef }: TechPassCardProps
       />
 
       <div className="relative z-10 flex items-center justify-between border-b border-white/10 pb-4">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-slate-800 to-slate-900 shadow-sm border border-white/20">
-            <Sparkles className="h-4 w-4 text-white" />
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-slate-800 to-slate-900 shadow-sm border border-white/20 p-1.5 overflow-hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="Techies" className="h-full w-full object-contain" />
           </div>
           <span className="font-inter text-sm font-extrabold tracking-wider text-white">
             TECHIES<span className="text-slate-400">.</span>

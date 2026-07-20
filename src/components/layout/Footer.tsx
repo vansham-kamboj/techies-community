@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Sparkles } from "lucide-react";
-import { FaInstagram, FaLinkedin, FaGithub, FaDiscord, FaXTwitter } from "react-icons/fa6";
+import { Sparkles, ArrowRight } from "lucide-react";
+import { FaInstagram, FaLinkedin, FaGithub, FaDiscord, FaXTwitter, FaWhatsapp } from "react-icons/fa6";
 
 export default function Footer() {
   const [currentYear, setCurrentYear] = React.useState<number>(2026);
@@ -31,43 +31,34 @@ export default function Footer() {
           <div className="flex flex-col max-w-lg gap-6">
             {/* Brand mark */}
             <div>
-              <a href="/" className="group inline-flex items-center gap-2.5 font-jakarta text-xl font-bold tracking-tight text-white">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/logo.png"
-                  alt="Techies Community Logo"
-                  className="h-5 sm:h-[22px] w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-                />
-                <span>
-                  Techies<span className="text-slate-400 font-normal">Community</span>
-                </span>
+              <a href="/" className="font-jakarta text-xl font-bold tracking-tight text-white">
+                Techies<span className="text-slate-400 font-normal">Community</span>
               </a>
               <p className="mt-2 font-inter text-sm text-slate-400 leading-relaxed max-w-xs">
                 For dreamers, builders, and innovators who choose to create their own path.
               </p>
             </div>
 
-            {/* Subscribe Form */}
+            {/* WhatsApp Community CTA */}
             <div>
-              <h3 className="font-jakarta text-base font-bold tracking-tight text-white mb-3">
-                Stay in the loop
+              <h3 className="font-jakarta text-base font-bold tracking-tight text-white mb-2.5">
+                Join Our WhatsApp Community
               </h3>
-              <form onSubmit={(e) => e.preventDefault()} className="flex flex-col sm:flex-row items-stretch gap-2.5">
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  className="flex-1 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 font-inter text-sm text-white placeholder-white/30 focus:outline-none focus:border-white/30 focus:ring-1 focus:ring-white/10 backdrop-blur-md transition-colors"
-                />
-                <button
-                  type="submit"
-                  className="btn-primary pl-6 pr-2 py-2 whitespace-nowrap"
-                >
-                  <span>Subscribe</span>
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-900 text-white shadow-inner">
-                    <Sparkles className="h-3.5 w-3.5" />
-                  </div>
-                </button>
-              </form>
+              <p className="font-inter text-xs text-slate-400 leading-relaxed mb-4 max-w-xs">
+                Connect instantly with dreamers, builders, and innovators across our global chapters.
+              </p>
+              <a
+                href="https://chat.whatsapp.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-teal-400 px-6 py-3 font-inter text-sm font-bold text-neutral-950 shadow-lg shadow-emerald-500/20 transition-all duration-300 hover:scale-105 hover:shadow-emerald-500/30"
+              >
+                <FaWhatsapp className="h-5 w-5 text-neutral-950" />
+                <span>Join WhatsApp Community</span>
+                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-950 text-emerald-400 shadow-inner transition-transform group-hover:translate-x-0.5">
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </div>
+              </a>
             </div>
           </div>
 
