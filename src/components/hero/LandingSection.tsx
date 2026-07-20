@@ -129,7 +129,7 @@ export default function LandingSection() {
             className="order-2 md:order-1 flex-shrink-0 w-[110px] sm:w-[130px] aspect-video rounded-xl overflow-hidden glass-border-gradient shadow-glass-lg relative group cursor-pointer hover:shadow-aurora-glow transition-shadow duration-500"
           >
             <LazyVideo
-              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+              src="/0707.mp4"
               className="h-full w-full"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity" />
@@ -172,8 +172,8 @@ export default function LandingSection() {
             </div>
           </a>
 
-          <a href="#universe" className="btn-secondary px-7 py-3.5">
-            <span>Explore Universe</span>
+          <a href="#highlights" className="btn-secondary px-7 py-3.5">
+            <span>Events</span>
           </a>
         </motion.div>
       </div>

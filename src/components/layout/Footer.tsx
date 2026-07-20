@@ -87,7 +87,7 @@ export default function Footer() {
                 Community Journey
               </a>
               <a href="/#highlights" className="font-inter text-sm text-white/70 transition-colors hover:text-white">
-                Highlights
+                Events
               </a>
               <a href="/connections" className="font-inter text-sm text-white/70 transition-colors hover:text-white">
                 Connections Hub

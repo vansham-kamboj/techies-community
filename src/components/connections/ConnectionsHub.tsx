@@ -16,6 +16,8 @@ import {
   FileText,
   FileSpreadsheet,
   X,
+  Cloud,
+  CloudCheck,
 } from "lucide-react";
 import { ConnectionRecord, exportToExcel, exportToCSV, importFromFile } from "./ConnectionsExportImport";
 import { createPortal } from "react-dom";
@@ -31,6 +33,7 @@ export default function ConnectionsHub() {
   const [showClearConfirm, setShowClearConfirm] = useState<boolean>(false);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const [isMounted, setIsMounted] = useState<boolean>(false);
+  const [syncStatus, setSyncStatus] = useState<"synced" | "saving" | "error">("synced");
   const importInputRef = useRef<HTMLInputElement>(null);
 
   const showToast = (msg: string) => {
@@ -58,6 +61,7 @@ export default function ConnectionsHub() {
   const saveToStorage = (newConnections: ConnectionRecord[]) => {
     setConnections(newConnections);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(newConnections));
+    setSyncStatus("synced");
   };
 
   const handleScanSuccess = (record: ConnectionRecord) => {
@@ -224,17 +228,27 @@ export default function ConnectionsHub() {
       {/* Header & Main Actions */}
       <div className="relative z-10 flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-white/10 pb-8">
         <div>
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex flex-wrap items-center gap-3 mb-2">
             <span className="flex h-2 w-2 rounded-full bg-white animate-pulse" />
             <span className="font-inter text-xs font-bold tracking-widest text-slate-300 uppercase">
-              100% Client-Side CRM • Zero Backend
+              Personal Networking Matrix • Local Storage
             </span>
+            {syncStatus === "synced" && (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[11px] font-bold text-slate-200">
+                <CloudCheck className="h-3 w-3" /> Saved Locally
+              </span>
+            )}
+            {syncStatus === "saving" && (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/10 px-2.5 py-0.5 text-[11px] font-bold text-white animate-pulse">
+                <Cloud className="h-3 w-3" /> Saving...
+              </span>
+            )}
           </div>
           <h1 className="font-jakarta text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
             Connections <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">Hub</span>
           </h1>
           <p className="mt-3 font-inter text-sm sm:text-base text-slate-300 max-w-2xl font-normal">
-            Your personal networking matrix. Scan TechPass QR codes at meetups, workshops, and hackathons to save and organize builder contacts directly inside your browser.
+            Your personal networking matrix. Scan TechPass QR codes at meetups and hackathons to save and organize your contacts securely in your local browser storage.
           </p>
         </div>
 

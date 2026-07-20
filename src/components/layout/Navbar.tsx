@@ -31,7 +31,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "TechPass", href: "/#techpass" },
-    { name: "Showcase", href: "/#highlights" },
+    { name: "Events", href: "/#highlights" },
     { name: "Connections Hub", href: "/connections" },
     { name: "Contact Us", href: "/#techpass" },
   ];

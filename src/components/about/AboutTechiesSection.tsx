@@ -3,12 +3,6 @@
 import React, { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import {
-  Code2,
-  Cpu,
-  Rocket,
-  Video,
-  Palette,
-  Users,
   Sparkles,
   Terminal,
   Activity,
@@ -17,22 +11,6 @@ import {
   Globe,
   GitBranch,
 } from "lucide-react";
-
-const FEATURE_PILLS = [
-  { label: "Coding", icon: Code2 },
-  { label: "AI & Automation", icon: Cpu },
-  { label: "Startups", icon: Rocket },
-  { label: "Content Creation", icon: Video },
-  { label: "Design", icon: Palette },
-  { label: "Community", icon: Users },
-];
-
-const STATS_DATA = [
-  { label: "Community Members", value: "14,000+" },
-  { label: "Events Organized", value: "120+" },
-  { label: "Workshops", value: "85+" },
-  { label: "Projects Built", value: "300+" },
-];
 
 export default function AboutTechiesSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -105,50 +83,6 @@ export default function AboutTechiesSection() {
           <p className="mt-3 font-inter text-sm sm:text-base text-slate-300/90 leading-relaxed max-w-lg">
             We are not a traditional student club or a passive study group. Techies Community is an autonomous engineering ecosystem built for creators who choose to forge their own paths. Here, we design, code, and scale breakthrough zero-to-one technologies across global domains.
           </p>
-
-          {/* Feature Pills / Floating Cards (Compact & Zero Glow) */}
-          <div className="mt-4 flex flex-wrap items-center gap-2 max-w-lg">
-            {FEATURE_PILLS.map((pill, idx) => {
-              const Icon = pill.icon;
-              return (
-                <motion.div
-                  key={pill.label}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: 0.05 * idx }}
-                  whileHover={{ scale: 1.04, y: -1 }}
-                  className="group relative flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 backdrop-blur-md transition-all duration-300 hover:border-white/30 hover:bg-white/[0.07] cursor-default"
-                >
-                  <Icon className="h-3 w-3 text-slate-400 transition-transform duration-300 group-hover:rotate-12" />
-                  <span className="font-inter text-xs font-semibold text-slate-200 tracking-wide">
-                    {pill.label}
-                  </span>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Compact Embedded Statistics Cards */}
-          <div className="mt-6 w-full grid grid-cols-2 gap-3 max-w-lg">
-            {STATS_DATA.map((stat, idx) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.2 + 0.08 * idx }}
-                className="group relative rounded-xl border border-white/10 bg-white/[0.03] p-3.5 backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]"
-              >
-                <div className="font-jakarta text-xl sm:text-2xl font-bold tracking-tight text-white inline-block">
-                  {stat.value}
-                </div>
-                <div className="mt-0.5 font-inter text-xs font-medium text-slate-400">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </motion.div>
 
         {/* Right Column (7 columns on desktop): Compact Visual Composition (No Glows) */}

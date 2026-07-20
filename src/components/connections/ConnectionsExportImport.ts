@@ -4,6 +4,7 @@ import { saveAs } from "file-saver";
 export interface ConnectionRecord {
   id: string; // Internal record ID or techpassId
   techpassId: string;
+  userTechId?: string; // The user who scanned this connection
   name: string;
   designation: string;
   organization: string;

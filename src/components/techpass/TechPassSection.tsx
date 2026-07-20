@@ -14,15 +14,20 @@ import {
   X,
   Shield,
   Palette,
+  Cloud,
+  CloudCheck,
 } from "lucide-react";
 import TechPassCard, { TechPassData, TechPassTheme } from "@/components/techpass/TechPassCard";
+import { upsertTechPassCard } from "@/app/actions/techpass";
 
 export default function TechPassSection() {
   const cardRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const syncTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [theme, setTheme] = useState<TechPassTheme>("aurora-violet");
   const [customTagInput, setCustomTagInput] = useState("");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [syncStatus, setSyncStatus] = useState<"synced" | "saving" | "error">("synced");
 
   const [formData, setFormData] = useState<TechPassData>({
     profilePhoto: "",
@@ -72,15 +77,27 @@ export default function TechPassSection() {
   useEffect(() => {
     if (formData.techId) {
       localStorage.setItem("techpass_my_data", JSON.stringify(formData));
+
+      // Debounced automatic sync to NeonDB PostgreSQL
+      setSyncStatus("saving");
+      if (syncTimeoutRef.current) clearTimeout(syncTimeoutRef.current);
+      syncTimeoutRef.current = setTimeout(async () => {
+        const res = await upsertTechPassCard(formData, theme);
+        if (res.success) {
+          setSyncStatus("synced");
+        } else {
+          setSyncStatus("error");
+        }
+      }, 1200);
     }
-  }, [formData]);
+  }, [formData, theme]);
 
   const generateRandomId = () => {
     const randomNum = Math.floor(1000 + Math.random() * 9000);
     const newId = `TECH-${randomNum}`;
     localStorage.setItem("techpass_my_id", newId);
     setFormData((prev) => ({ ...prev, techId: newId }));
-    showToast("Generated and saved new TechPass ID!");
+    showToast("Generated & saved new TechPass ID!");
   };
 
   const showToast = (msg: string) => {
@@ -263,7 +280,7 @@ export default function TechPassSection() {
               muted
               playsInline
               className="h-full w-full object-cover"
-              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+              src="/0707.mp4"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity" />
             <div className="absolute bottom-1 right-1.5 flex items-center gap-1 text-[8px] font-inter font-bold tracking-widest uppercase text-white/80 bg-black/60 px-1.5 py-0.5 rounded backdrop-blur-sm">
@@ -579,9 +596,24 @@ export default function TechPassSection() {
                 <span>SHARE</span>
               </button>
             </div>
-            <span className="mt-3.5 font-inter text-xs text-white/50 text-center font-normal">
-              Generated cards belong entirely to you. Zero server storage.
-            </span>
+            <div className="mt-4 flex items-center justify-center gap-2 font-inter text-xs font-medium text-slate-300 bg-white/[0.04] px-4 py-2 rounded-xl border border-white/10">
+              {syncStatus === "saving" ? (
+                <>
+                  <Cloud className="h-3.5 w-3.5 text-amber-300 animate-pulse" />
+                  <span>Saving card...</span>
+                </>
+              ) : syncStatus === "synced" ? (
+                <>
+                  <CloudCheck className="h-3.5 w-3.5 text-slate-200" />
+                  <span>Card saved ({formData.techId})</span>
+                </>
+              ) : (
+                <>
+                  <Cloud className="h-3.5 w-3.5 text-rose-400" />
+                  <span>Offline / Save error</span>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
