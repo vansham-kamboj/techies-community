@@ -106,15 +106,26 @@ export const importFromFile = async (
         const newEntries: ConnectionRecord[] = [];
 
         for (const row of rows) {
+          const name = String(row["Full Name"] || row["name"] || row["Name"] || "Imported Builder").trim();
+          const cleanName = name.toLowerCase();
           const techpassId = String(row["TechPass ID"] || row["techpassId"] || row["ID"] || "").trim();
+          const cleanId = techpassId.toLowerCase();
           const whatsapp = String(row["WhatsApp"] || row["whatsapp"] || row["Phone"] || "").trim();
           const cleanPhone = whatsapp.replace(/[^0-9]/g, "");
 
-          // Check if duplicate
-          const isDuplicateId = techpassId && techpassId !== "N/A" && existingIds.has(techpassId.toLowerCase());
-          const isDuplicatePhone = cleanPhone && existingPhones.has(cleanPhone);
+          // Check if duplicate (require identical name plus ID/Phone match)
+          const isDuplicate = [...currentConnections, ...newEntries].some((c) => {
+            const existingName = (c.name || "").trim().toLowerCase();
+            if (existingName !== cleanName) return false;
+            const existingId = (c.techpassId || "").trim().toLowerCase();
+            const existingPhone = c.whatsapp ? c.whatsapp.replace(/[^0-9]/g, "") : "";
+            return (
+              (cleanId && cleanId !== "n/a" && existingId === cleanId) ||
+              (cleanPhone && cleanPhone !== "14155552671" && existingPhone === cleanPhone)
+            );
+          });
 
-          if (isDuplicateId || isDuplicatePhone) {
+          if (isDuplicate) {
             skippedCount++;
             continue;
           }

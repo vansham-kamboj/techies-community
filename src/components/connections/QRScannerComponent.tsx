@@ -148,7 +148,7 @@ export default function QRScannerComponent({
           (decodedText) => {
             handleDecodedText(decodedText);
           },
-          () => {}
+          () => { }
         );
         showStatus("info", "Camera active (Environment mode)! Point at any TechPass QR code.");
       } catch (fallbackErr) {
@@ -172,7 +172,7 @@ export default function QRScannerComponent({
             { deviceId: { exact: selectedCameraId } },
             { fps: 10, qrbox: { width: 250, height: 250 } },
             (decodedText) => handleDecodedText(decodedText),
-            () => {}
+            () => { }
           );
         })
         .then(() => showStatus("info", "Switched camera device."))
@@ -184,7 +184,7 @@ export default function QRScannerComponent({
   useEffect(() => {
     return () => {
       if (scannerRef.current && scannerRef.current.isScanning) {
-        scannerRef.current.stop().catch(() => {});
+        scannerRef.current.stop().catch(() => { });
       }
     };
   }, []);
@@ -212,8 +212,8 @@ export default function QRScannerComponent({
           expertise: Array.isArray(parsed.expertise)
             ? parsed.expertise
             : Array.isArray(parsed.expertiseTags)
-            ? parsed.expertiseTags
-            : [],
+              ? parsed.expertiseTags
+              : [],
           whatsapp: String(parsed.whatsapp || parsed.phone || parsed.mobile || "").trim(),
           instagram: String(parsed.instagram || "").trim(),
           linkedin: String(parsed.linkedin || "").trim(),
@@ -312,18 +312,38 @@ export default function QRScannerComponent({
       };
     }
 
-    // Check Duplicate
-    const isDuplicate = existingConnections.some(
-      (c) =>
-        (c.techpassId && c.techpassId.toLowerCase() === newRecord!.techpassId.toLowerCase()) ||
-        (newRecord!.whatsapp && c.whatsapp && c.whatsapp.replace(/[^0-9]/g, "") === newRecord!.whatsapp.replace(/[^0-9]/g, ""))
-    );
+    // Smart Duplicate Detection: Never block two different people who happen to share default/sample numbers or fallback IDs!
+    const cleanNewName = newRecord!.name.trim().toLowerCase();
+    const cleanNewId = newRecord!.techpassId.trim().toLowerCase();
+    const cleanNewPhone = newRecord!.whatsapp ? newRecord!.whatsapp.replace(/[^0-9]/g, "") : "";
+    const cleanNewOrg = newRecord!.organization.trim().toLowerCase();
+    const cleanNewDesignation = newRecord!.designation.trim().toLowerCase();
+
+    const isDuplicate = existingConnections.some((c) => {
+      const cleanExistingName = (c.name || "").trim().toLowerCase();
+      const cleanExistingId = (c.techpassId || "").trim().toLowerCase();
+      const cleanExistingPhone = c.whatsapp ? c.whatsapp.replace(/[^0-9]/g, "") : "";
+      const cleanExistingOrg = (c.organization || "").trim().toLowerCase();
+      const cleanExistingDesignation = (c.designation || "").trim().toLowerCase();
+
+      // If builder names are different, they are two different human beings! Do not treat them as duplicate.
+      if (cleanExistingName !== cleanNewName) {
+        return false;
+      }
+
+      // If names match (`cleanExistingName === cleanNewName`), check if they are indeed the exact same contact:
+      return (
+        cleanExistingId === cleanNewId ||
+        (cleanExistingPhone && cleanNewPhone && cleanExistingPhone === cleanNewPhone && cleanExistingPhone !== "14155552671") ||
+        (cleanExistingOrg === cleanNewOrg && cleanExistingDesignation === cleanNewDesignation)
+      );
+    });
 
     if (isDuplicate) {
       if (typeof navigator !== "undefined" && navigator.vibrate) {
         try {
           navigator.vibrate([80, 50, 80]);
-        } catch (e) {}
+        } catch (e) { }
       }
       showStatus("error", `Duplicate contact: "${newRecord!.name}" (${newRecord!.techpassId}) is already in your Connections Hub.`);
       return;
@@ -333,7 +353,7 @@ export default function QRScannerComponent({
     if (typeof navigator !== "undefined" && navigator.vibrate) {
       try {
         navigator.vibrate([150, 60, 150]);
-      } catch (e) {}
+      } catch (e) { }
     }
 
     onScanSuccess(newRecord!);
@@ -427,15 +447,14 @@ export default function QRScannerComponent({
       {/* Status Alert Banner */}
       {statusMsg && (
         <div
-          className={`mb-6 flex items-center justify-between rounded-2xl border px-4 py-3 font-inter text-xs font-semibold shadow-lg backdrop-blur-md transition-all ${
-            statusMsg.type === "success"
-              ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-300"
-              : statusMsg.type === "error"
+          className={`mb-6 flex items-center justify-between rounded-2xl border px-4 py-3 font-inter text-xs font-semibold shadow-lg backdrop-blur-md transition-all ${statusMsg.type === "success"
+            ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-300"
+            : statusMsg.type === "error"
               ? "border-rose-500/40 bg-rose-500/10 text-rose-300"
               : statusMsg.type === "legacy"
-              ? "border-amber-500/40 bg-amber-500/15 text-amber-200"
-              : "border-white/20 bg-white/10 text-white"
-          }`}
+                ? "border-amber-500/40 bg-amber-500/15 text-amber-200"
+                : "border-white/20 bg-white/10 text-white"
+            }`}
         >
           <div className="flex items-center gap-2.5">
             {statusMsg.type === "success" && <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />}
@@ -452,9 +471,8 @@ export default function QRScannerComponent({
       {/* Camera Reader Viewport */}
       <div className="mx-auto mb-4 sm:mb-6 flex flex-col items-center">
         <div
-          className={`relative w-full max-w-[260px] sm:max-w-[340px] aspect-square rounded-2xl overflow-hidden border-2 bg-black/40 flex items-center justify-center transition-all ${
-            isCameraActive ? "border-white/60 shadow-lg shadow-white/10" : "border-white/10"
-          }`}
+          className={`relative w-full max-w-[260px] sm:max-w-[340px] aspect-square rounded-2xl overflow-hidden border-2 bg-black/40 flex items-center justify-center transition-all ${isCameraActive ? "border-white/60 shadow-lg shadow-white/10" : "border-white/10"
+            }`}
         >
           {/* Sibling overlay when camera is offline so React DOM never touches children inside #qr-reader-container */}
           {!isCameraActive && (
@@ -490,11 +508,10 @@ export default function QRScannerComponent({
         {/* 1. Live WebRTC Camera Stream */}
         <button
           onClick={handleStartCamera}
-          className={`w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 font-inter text-xs font-bold transition-all shadow-md ${
-            isCameraActive
-              ? "bg-rose-500/20 border border-rose-500/40 text-rose-300 hover:bg-rose-500/30"
-              : "bg-white text-neutral-950 hover:bg-slate-200 hover:scale-105"
-          }`}
+          className={`w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 font-inter text-xs font-bold transition-all shadow-md ${isCameraActive
+            ? "bg-rose-500/20 border border-rose-500/40 text-rose-300 hover:bg-rose-500/30"
+            : "bg-white text-neutral-950 hover:bg-slate-200 hover:scale-105"
+            }`}
         >
           {isCameraActive ? <CameraOff className="h-4 w-4" /> : <Camera className="h-4 w-4" />}
           <span>{isCameraActive ? "STOP LIVE CAMERA" : "START LIVE CAMERA"}</span>
