@@ -268,16 +268,41 @@ const UNIVERSE_NODES: NodeData[] = [
   },
 ];
 
-// 3D Core Platinum/Obsidian Central Sphere
+// Solar corona glow layers behind the core
+function SolarCorona() {
+  const innerRef = useRef<THREE.Mesh>(null);
+  const outerRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    const pulse = 1 + Math.sin(state.clock.elapsedTime * 1.5) * 0.06;
+    if (innerRef.current) innerRef.current.scale.setScalar(pulse);
+    if (outerRef.current) outerRef.current.scale.setScalar(pulse * 1.15);
+  });
+
+  return (
+    <group>
+      <Sphere ref={innerRef} args={[1.55, 16, 16]}>
+        <meshBasicMaterial color="#06b6d4" transparent opacity={0.08} depthWrite={false} blending={THREE.AdditiveBlending} />
+      </Sphere>
+      <Sphere ref={outerRef} args={[2.1, 16, 16]}>
+        <meshBasicMaterial color="#a855f7" transparent opacity={0.04} depthWrite={false} blending={THREE.AdditiveBlending} />
+      </Sphere>
+      <pointLight color="#e0f2fe" intensity={2.5} distance={8} decay={2} />
+    </group>
+  );
+}
+
+// 3D Core Platinum/Obsidian Central Sphere with solar glow
 function TechiesCore({ onHover, isModalOpen, isMobile }: { onHover: (hovered: boolean) => void; isModalOpen: boolean; isMobile?: boolean }) {
   const coreRef = useRef<THREE.Mesh>(null);
   const ring1Ref = useRef<THREE.Mesh>(null);
   const ring2Ref = useRef<THREE.Mesh>(null);
   const ring3Ref = useRef<THREE.Mesh>(null);
+  const segments = isMobile ? 32 : 48;
 
   useFrame((state, delta) => {
     if (coreRef.current) {
-      coreRef.current.rotation.y += delta * 0.03; // Much slower rotation
+      coreRef.current.rotation.y += delta * 0.03;
     }
     if (ring1Ref.current) {
       ring1Ref.current.rotation.x += delta * 0.05;
@@ -308,26 +333,30 @@ function TechiesCore({ onHover, isModalOpen, isMobile }: { onHover: (hovered: bo
         document.body.style.cursor = "default";
       }}
     >
-      <Sphere ref={coreRef} args={[1.35, 64, 64]}>
+      <SolarCorona />
+
+      <Sphere ref={coreRef} args={[1.35, segments, segments]}>
         <meshPhysicalMaterial
           color="#f8fafc"
           metalness={0.95}
-          roughness={0.1}
+          roughness={0.08}
           clearcoat={1}
-          clearcoatRoughness={0.1}
+          clearcoatRoughness={0.05}
           reflectivity={1}
+          emissive="#e0f2fe"
+          emissiveIntensity={0.08}
         />
       </Sphere>
 
-      {/* Orbiting Platinum & Slate Rings around Core */}
-      <Torus ref={ring1Ref} args={[1.85, 0.005, 32, 128]}>
-        <meshBasicMaterial color="#ffffff" transparent opacity={0.75} />
+      {/* Orbiting Platinum & Aurora Rings around Core */}
+      <Torus ref={ring1Ref} args={[1.85, 0.006, 16, 64]}>
+        <meshBasicMaterial color="#ffffff" transparent opacity={0.85} blending={THREE.AdditiveBlending} />
       </Torus>
-      <Torus ref={ring2Ref} args={[2.25, 0.004, 32, 128]}>
-        <meshBasicMaterial color="#cbd5e1" transparent opacity={0.5} />
+      <Torus ref={ring2Ref} args={[2.25, 0.005, 16, 64]}>
+        <meshBasicMaterial color="#06b6d4" transparent opacity={0.35} blending={THREE.AdditiveBlending} />
       </Torus>
-      <Torus ref={ring3Ref} args={[2.65, 0.003, 32, 128]}>
-        <meshBasicMaterial color="#64748b" transparent opacity={0.6} />
+      <Torus ref={ring3Ref} args={[2.65, 0.004, 16, 64]}>
+        <meshBasicMaterial color="#a855f7" transparent opacity={0.25} blending={THREE.AdditiveBlending} />
       </Torus>
 
       <Html position={[0, -2.0, 0]} center distanceFactor={12} style={{ display: isModalOpen || isMobile ? "none" : "block" }}>
@@ -389,7 +418,7 @@ function OrbitingNode({
         {/* Node Sphere - sleek and compact */}
         <Sphere
           ref={meshRef}
-          args={[0.42, 32, 32]}
+          args={[0.42, isMobile ? 16 : 24, isMobile ? 16 : 24]}
           onClick={(e) => {
             if (isModalOpen) return;
             e.stopPropagation();
@@ -508,9 +537,26 @@ export default function TechiesUniverseSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="universe" className="relative w-full py-16 sm:py-20 px-4 sm:px-8 bg-[#030509]">
+    <section ref={sectionRef} id="universe" className="relative w-full py-20 sm:py-28 px-4 sm:px-8 bg-[#030509] overflow-hidden">
+      <div className="section-divider" />
+      {/* Ambient glow overlay */}
+      <div className="pointer-events-none absolute inset-0 section-ambient opacity-80" />
+
       {/* Section Header */}
-      <div className="relative z-10 mx-auto max-w-4xl text-center mb-10">
+      <div className="relative z-10 mx-auto max-w-4xl text-center mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.05 }}
+          className="mb-5 flex justify-center"
+        >
+          <span className="section-eyebrow">
+            <span className="h-1.5 w-1.5 rounded-full bg-aurora-cyan/80 animate-pulse" />
+            Techies Universe
+          </span>
+        </motion.div>
+
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -518,7 +564,7 @@ export default function TechiesUniverseSection() {
           transition={{ delay: 0.1 }}
           className="font-jakarta text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl"
         >
-          The Techies <span className="bg-gradient-to-b from-slate-200 via-slate-400 to-slate-500 bg-clip-text text-transparent">Universe</span>
+          Six Domains of <span className="headline-gradient">Mastery</span>
         </motion.h2>
 
         <motion.p
@@ -526,19 +572,23 @@ export default function TechiesUniverseSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="mt-3 font-inter text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-normal"
+          className="mt-4 font-inter text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed"
         >
-          Click or hover on any orbiting node to unlock our interactive dossier of domains, hardcoded curriculum, and high-leverage opportunities.
+          Click or hover on any orbiting node to unlock our interactive dossier of domains, curriculum, and high-leverage opportunities.
         </motion.p>
       </div>
 
       {/* 3D Canvas Area */}
       <div
-        className={`relative mx-auto h-[520px] sm:h-[640px] w-full max-w-7xl rounded-[32px] border border-white/[0.08] bg-[#030509] shadow-2xl overflow-hidden flex items-center justify-center ${
+        className={`relative mx-auto h-[520px] sm:h-[640px] w-full max-w-7xl rounded-[32px] glass-border-gradient shadow-glass-lg overflow-hidden flex items-center justify-center ${
           selectedNode ? "pointer-events-none" : ""
         }`}
       >
-        <div className="absolute top-6 left-8 z-10 hidden sm:flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 font-inter text-xs text-slate-300 backdrop-blur-md">
+        {/* Ambient aurora inside canvas container */}
+        <div className="pointer-events-none absolute inset-0 aurora-mesh opacity-60" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_50%_50%,transparent_30%,rgba(3,5,9,0.6)_100%)]" />
+
+        <div className="absolute top-6 left-8 z-10 hidden sm:flex items-center gap-2 pill-badge">
           <span className="h-2 w-2 rounded-full bg-white" />
           <span>Click node or sphere to zoom & view panel. Drag to rotate galaxy.</span>
         </div>
@@ -547,16 +597,14 @@ export default function TechiesUniverseSection() {
           <Canvas
             frameloop={isInView ? "always" : "never"}
             camera={{ position: [0, 0, 11], fov: 50 }}
-            gl={{ antialias: !isMobile, alpha: true, powerPreference: "high-performance" }}
-            dpr={[1, isMobile ? 1.2 : 1.75]}
+            gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
+            dpr={[1, isMobile ? 1 : 1.35]}
           >
-            <ambientLight intensity={0.75} />
-            <pointLight position={[10, 10, 10]} intensity={2.0} color="#ffffff" />
-            <pointLight position={[-10, -10, -10]} intensity={1.5} color="#cbd5e1" />
-            <pointLight position={[0, 15, 0]} intensity={1.0} color="#f8fafc" />
-            
-            {/* Very slow moving stars */}
-            <Stars radius={120} depth={60} count={isMobile ? 180 : 350} factor={2.5} saturation={0} fade speed={0.1} />
+            <ambientLight intensity={0.6} />
+            <pointLight position={[10, 10, 10]} intensity={1.5} color="#ffffff" />
+            <pointLight position={[-10, -5, -10]} intensity={1.0} color="#06b6d4" />
+
+            <Stars radius={100} depth={50} count={isMobile ? 120 : 200} factor={2} saturation={0} fade speed={0.08} />
 
             <CameraController selectedNode={selectedNode} />
 

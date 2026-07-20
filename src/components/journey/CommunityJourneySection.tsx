@@ -126,18 +126,35 @@ export default function CommunityJourneySection() {
   const Icon = currentMilestone.icon;
 
   return (
-    <section id="roadmap" className="relative w-full py-16 sm:py-20 px-4 sm:px-8 overflow-hidden bg-[#030509]">
+    <section id="roadmap" className="relative w-full py-20 sm:py-28 px-4 sm:px-8 overflow-hidden bg-[#030509]">
+      <div className="section-divider" />
+      {/* Ambient glow overlay */}
+      <div className="pointer-events-none absolute inset-0 section-ambient opacity-75" />
+
       {/* Section Header */}
-      <div className="relative z-10 mx-auto max-w-4xl text-center mb-10">
+      <div className="relative z-10 mx-auto max-w-4xl text-center mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.05 }}
+          className="mb-5 flex justify-center"
+        >
+          <span className="section-eyebrow">
+            <span className="h-1.5 w-1.5 rounded-full bg-white/60 animate-pulse" />
+            Community Roadmap
+          </span>
+        </motion.div>
+
         {/* Crisp clean typography matching TechPass style */}
         <h2 className="font-jakarta text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">
           The Community{" "}
-          <span className="bg-gradient-to-b from-slate-200 via-slate-400 to-slate-500 bg-clip-text text-transparent">
+          <span className="headline-gradient">
             Journey
           </span>
         </h2>
 
-        <p className="mt-4 font-inter text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-normal">
+        <p className="mt-4 font-inter text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
           We have engineered a systematic, high-leverage progression designed to transform curious explorers into industry-shaping founders and engineers.
         </p>
       </div>
@@ -146,7 +163,7 @@ export default function CommunityJourneySection() {
       <div className="relative z-10 mx-auto max-w-6xl mb-10">
         <div className="absolute top-1/2 left-0 right-0 h-1 -translate-y-1/2 bg-white/10 rounded-full hidden sm:block">
           <motion.div
-            className="h-full bg-gradient-to-r from-white via-slate-300 to-slate-500 shadow-sm rounded-full"
+            className="h-full bg-gradient-to-r from-white via-slate-300 to-slate-500 shadow-[0_0_12px_rgba(255,255,255,0.1)] rounded-full"
             initial={{ width: "25%" }}
             animate={{ width: `${(activeStep / ROADMAP_STEPS.length) * 100}%` }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
@@ -171,8 +188,8 @@ export default function CommunityJourneySection() {
                 <div
                   className={`mb-3.5 flex h-14 w-14 items-center justify-center rounded-2xl border transition-all ${
                     isActive
-                      ? "border-white/25 bg-white/10 shadow-md scale-110 text-white"
-                      : "border-white/15 bg-white/5 group-hover:border-white/25 text-slate-400"
+                      ? "border-white/30 bg-white/[0.12] shadow-md scale-110 text-white"
+                      : "border-white/15 bg-white/[0.06] group-hover:border-white/25 text-slate-400"
                   }`}
                 >
                   <MIcon className="h-6 w-6" />

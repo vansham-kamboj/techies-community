@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { Sparkles } from "lucide-react";
 import { FaInstagram, FaLinkedin, FaGithub, FaDiscord, FaXTwitter } from "react-icons/fa6";
 
 export default function Footer() {
@@ -19,56 +20,80 @@ export default function Footer() {
 
   return (
     <footer className="relative overflow-hidden bg-[#030509] pt-20 pb-6 text-white border-t border-white/[0.08]">
+      {/* Ambient top gradient — blends page content into footer */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-transparent via-transparent to-transparent" />
+      <div className="pointer-events-none absolute inset-0 section-ambient opacity-60" />
+
       <div className="relative z-10 mx-auto max-w-7xl px-6 sm:px-8">
         {/* Top Main Grid */}
         <div className="flex flex-col justify-between gap-12 lg:flex-row lg:items-start">
-          {/* Left Column: Subscribe Form */}
-          <div className="flex flex-col max-w-lg">
-            <h3 className="font-jakarta text-xl sm:text-2xl font-bold tracking-tight text-white mb-4">
-              Subscribe for latest update
-            </h3>
-            <form onSubmit={(e) => e.preventDefault()} className="flex flex-wrap sm:flex-nowrap items-center gap-3">
-              <input
-                type="email"
-                placeholder="Enter email to subscribe"
-                className="w-full sm:w-auto flex-1 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 font-inter text-sm text-white placeholder-white/40 focus:outline-none focus:border-white/30 backdrop-blur-md"
-              />
-              <button
-                type="submit"
-                className="rounded-full bg-white px-6 py-3 font-inter text-sm font-bold text-neutral-950 transition-all hover:scale-105 hover:bg-slate-200 shadow-md whitespace-nowrap"
-              >
-                Subscribe Now
-              </button>
-            </form>
+          {/* Left Column: Brand + Subscribe */}
+          <div className="flex flex-col max-w-lg gap-6">
+            {/* Brand mark */}
+            <div>
+              <a href="/" className="font-jakarta text-xl font-bold tracking-tight text-white">
+                Techies<span className="text-slate-400 font-normal">Community</span>
+              </a>
+              <p className="mt-2 font-inter text-sm text-slate-400 leading-relaxed max-w-xs">
+                For dreamers, builders, and innovators who choose to create their own path.
+              </p>
+            </div>
+
+            {/* Subscribe Form */}
+            <div>
+              <h3 className="font-jakarta text-base font-bold tracking-tight text-white mb-3">
+                Stay in the loop
+              </h3>
+              <form onSubmit={(e) => e.preventDefault()} className="flex flex-col sm:flex-row items-stretch gap-2.5">
+                <input
+                  type="email"
+                  placeholder="your@email.com"
+                  className="flex-1 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 font-inter text-sm text-white placeholder-white/30 focus:outline-none focus:border-white/30 focus:ring-1 focus:ring-white/10 backdrop-blur-md transition-colors"
+                />
+                <button
+                  type="submit"
+                  className="btn-primary pl-6 pr-2 py-2 whitespace-nowrap"
+                >
+                  <span>Subscribe</span>
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-900 text-white shadow-inner">
+                    <Sparkles className="h-3.5 w-3.5" />
+                  </div>
+                </button>
+              </form>
+            </div>
           </div>
 
           {/* Right Column: Quick Links & Follow Us */}
           <div className="flex flex-wrap gap-12 sm:gap-20">
             {/* Quick Links */}
             <div className="flex flex-col gap-3">
-              <span className="font-inter text-sm text-white/50 font-normal mb-1">
+              <span className="font-inter text-xs font-bold uppercase tracking-widest text-white/40 mb-1">
                 Quick Links
               </span>
-              <a href="#story" className="font-inter text-sm text-white/80 transition-colors hover:text-white">
+              <a href="/#story" className="font-inter text-sm text-white/70 transition-colors hover:text-white">
                 About Us
               </a>
-              <a href="#universe" className="font-inter text-sm text-white/80 transition-colors hover:text-white">
-                Technology
+              <a href="/#universe" className="font-inter text-sm text-white/70 transition-colors hover:text-white">
+                Tech Universe
               </a>
-              <a href="#roadmap" className="font-inter text-sm text-white/80 transition-colors hover:text-white">
-                Future Exploration
+              <a href="/#roadmap" className="font-inter text-sm text-white/70 transition-colors hover:text-white">
+                Community Journey
               </a>
-              <a href="#highlights" className="font-inter text-sm text-white/80 transition-colors hover:text-white">
-                Space Blog
+              <a href="/#highlights" className="font-inter text-sm text-white/70 transition-colors hover:text-white">
+                Highlights
+              </a>
+              <a href="/connections" className="font-inter text-sm text-white/70 transition-colors hover:text-white">
+                Connections Hub
               </a>
             </div>
 
             {/* Follow Us */}
             <div className="flex flex-col gap-3">
-              <span className="font-inter text-sm text-white/50 font-normal mb-1">
+              <span className="font-inter text-xs font-bold uppercase tracking-widest text-white/40 mb-1">
                 Follow Us
               </span>
-              <div className="flex items-center gap-3">
+              <div className="pt-1 border-t border-white/[0.07]" />
+              <div className="flex items-center gap-2.5">
                 {socialLinks.map((social) => {
                   const Icon = social.icon;
                   return (
@@ -78,9 +103,9 @@ export default function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={social.name}
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all hover:scale-110 hover:bg-white hover:text-neutral-950 shadow-sm"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 transition-all hover:scale-110 hover:border-white/30 hover:bg-white hover:text-neutral-950 shadow-sm"
                     >
-                      <Icon className="h-4 w-4" />
+                      <Icon className="h-3.5 w-3.5" />
                     </a>
                   );
                 })}
@@ -89,30 +114,29 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Middle/Bottom Row of Links & Copyright before the Big Text */}
-        <div className="mt-14 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-          <div className="flex items-center gap-6 font-inter text-sm text-white/70">
-            <a href="#privacy" className="hover:text-white transition-colors">
+        {/* Bottom Row — Privacy / Copyright */}
+        <div className="mt-14 flex flex-col justify-between gap-4 sm:flex-row sm:items-center border-t border-white/[0.07] pt-6">
+          <div className="flex items-center gap-6 font-inter text-xs text-white/40">
+            <a href="#privacy" className="hover:text-white/70 transition-colors">
               Privacy Policy
             </a>
-            <a href="#terms" className="hover:text-white transition-colors">
-              Terms & Services
+            <a href="#terms" className="hover:text-white/70 transition-colors">
+              Terms &amp; Services
             </a>
           </div>
 
-          <p className="font-inter text-sm text-white/50">
-            &copy; {currentYear} Techies Community All Rights Reserved
+          <p className="font-inter text-xs text-white/40">
+            &copy; {currentYear} Techies Community. All Rights Reserved.
           </p>
         </div>
       </div>
 
-      {/* Massive Watermark Font across the Bottom ("write techies in big fonts") */}
-      <div className="w-full overflow-hidden flex justify-center select-none pointer-events-none mt-10 pt-6 border-t border-white/[0.06]">
-        <h1 className="font-jakarta font-black text-[19vw] sm:text-[21vw] leading-[0.75] tracking-tighter uppercase text-white/[0.08] bg-gradient-to-b from-white/20 via-white/[0.06] to-transparent bg-clip-text text-transparent">
+      {/* Massive Watermark */}
+      <div className="w-full overflow-hidden flex justify-center select-none pointer-events-none mt-8">
+        <h2 className="font-jakarta font-black text-[19vw] sm:text-[21vw] leading-[0.75] tracking-tighter uppercase bg-gradient-to-b from-white/[0.08] via-white/[0.04] to-transparent bg-clip-text text-transparent">
           TECHIES
-        </h1>
+        </h2>
       </div>
     </footer>
   );
 }
-

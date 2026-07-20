@@ -200,13 +200,17 @@ export default function TechPassSection() {
   ];
 
   return (
-    <section id="techpass" className="relative w-full py-16 sm:py-20 px-4 sm:px-8 bg-[#030509] overflow-hidden">
+    <section id="techpass" className="relative w-full py-20 sm:py-28 px-4 sm:px-8 bg-[#030509] overflow-hidden">
+      <div className="section-divider" />
+      {/* Ambient glow overlay */}
+      <div className="pointer-events-none absolute inset-0 section-ambient opacity-70" />
+
       {/* Background Image with Screen Blend Mode */}
       <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">
         <img
           src="/techpass-bg.png"
           alt="TechPass Space Background"
-          className="w-full h-full object-cover mix-blend-screen opacity-95 scale-105"
+          className="w-full h-full object-cover mix-blend-screen opacity-90 scale-105"
         />
       </div>
 
@@ -223,12 +227,26 @@ export default function TechPassSection() {
       )}
 
       {/* Header */}
-      <div className="relative z-10 mx-auto max-w-5xl text-center mb-10">
+      <div className="relative z-10 mx-auto max-w-5xl text-center mb-12">
+        {/* Eyebrow badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.05 }}
+          className="mb-5 flex justify-center"
+        >
+          <span className="section-eyebrow">
+            <Shield className="h-3 w-3 text-slate-300" />
+            Your Digital Identity
+          </span>
+        </motion.div>
+
         {/* Flex layout: Heading on left (order-1), Video on right (order-2) */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 w-full">
           {/* Hero-style font & color split */}
           <h2 className="order-1 font-jakarta text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl text-center md:text-right">
-            Forge Your <span className="bg-gradient-to-b from-slate-200 via-slate-400 to-slate-500 bg-clip-text text-transparent">TechPass</span>
+            Forge Your <span className="headline-gradient">TechPass</span>
           </h2>
 
           {/* Responsive Small Horizontal Video Player on Right Side */}
@@ -255,7 +273,7 @@ export default function TechPassSection() {
           </motion.div>
         </div>
 
-        <p className="mt-4 font-inter text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-normal">
+        <p className="mt-5 font-inter text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
           Create your digital credential for our society of builders. All processing runs 100% locally in your browser — zero tracking, zero database.
         </p>
       </div>
@@ -339,7 +357,7 @@ export default function TechPassSection() {
                 value={formData.fullName}
                 onChange={(e) => setFormData((prev) => ({ ...prev, fullName: e.target.value }))}
                 placeholder="e.g., Alex Vance"
-                className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-4 py-3 font-inter text-sm text-white placeholder-white/40 focus:border-white/40 focus:outline-none"
+                className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-4 py-3 font-inter text-sm text-white placeholder-white/30 focus:border-white/30 focus:ring-1 focus:ring-white/10 focus:outline-none transition-colors"
               />
             </div>
 
@@ -352,7 +370,7 @@ export default function TechPassSection() {
                 value={formData.designation}
                 onChange={(e) => setFormData((prev) => ({ ...prev, designation: e.target.value }))}
                 placeholder="e.g., AI Systems Architect"
-                className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-4 py-3 font-inter text-sm text-white placeholder-white/40 focus:border-white/40 focus:outline-none"
+                className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-4 py-3 font-inter text-sm text-white placeholder-white/30 focus:border-white/30 focus:ring-1 focus:ring-white/10 focus:outline-none transition-colors"
               />
             </div>
 
@@ -365,7 +383,7 @@ export default function TechPassSection() {
                 value={formData.collegeCompany}
                 onChange={(e) => setFormData((prev) => ({ ...prev, collegeCompany: e.target.value }))}
                 placeholder="e.g., Stanford University / Y Combinator"
-                className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-4 py-3 font-inter text-sm text-white placeholder-white/40 focus:border-white/40 focus:outline-none"
+                className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-4 py-3 font-inter text-sm text-white placeholder-white/30 focus:border-white/30 focus:ring-1 focus:ring-white/10 focus:outline-none transition-colors"
               />
             </div>
           </div>
@@ -442,7 +460,7 @@ export default function TechPassSection() {
                 value={formData.instagram}
                 onChange={(e) => setFormData((prev) => ({ ...prev, instagram: e.target.value }))}
                 placeholder="https://instagram.com/handle"
-                className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-3.5 py-2.5 font-inter text-xs text-white placeholder-white/40 focus:border-white/40 focus:outline-none"
+                className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-3.5 py-2.5 font-inter text-xs text-white placeholder-white/30 focus:border-white/30 focus:ring-1 focus:ring-white/10 focus:outline-none transition-colors"
               />
             </div>
 
@@ -455,7 +473,7 @@ export default function TechPassSection() {
                 value={formData.linkedin}
                 onChange={(e) => setFormData((prev) => ({ ...prev, linkedin: e.target.value }))}
                 placeholder="https://linkedin.com/in/handle"
-                className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-3.5 py-2.5 font-inter text-xs text-white placeholder-white/40 focus:border-white/40 focus:outline-none"
+                className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-3.5 py-2.5 font-inter text-xs text-white placeholder-white/30 focus:border-white/30 focus:ring-1 focus:ring-white/10 focus:outline-none transition-colors"
               />
             </div>
 
@@ -468,7 +486,7 @@ export default function TechPassSection() {
                 value={formData.github}
                 onChange={(e) => setFormData((prev) => ({ ...prev, github: e.target.value }))}
                 placeholder="https://github.com/handle"
-                className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-3.5 py-2.5 font-inter text-xs text-white placeholder-white/40 focus:border-white/40 focus:outline-none"
+                className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-3.5 py-2.5 font-inter text-xs text-white placeholder-white/30 focus:border-white/30 focus:ring-1 focus:ring-white/10 focus:outline-none transition-colors"
               />
             </div>
 
@@ -481,7 +499,7 @@ export default function TechPassSection() {
                 value={formData.whatsapp}
                 onChange={(e) => setFormData((prev) => ({ ...prev, whatsapp: e.target.value }))}
                 placeholder="e.g., +919999999999"
-                className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-3.5 py-2.5 font-inter text-xs text-white placeholder-white/40 focus:border-white/40 focus:outline-none"
+                className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-3.5 py-2.5 font-inter text-xs text-white placeholder-white/30 focus:border-white/30 focus:ring-1 focus:ring-white/10 focus:outline-none transition-colors"
               />
             </div>
 
@@ -494,7 +512,7 @@ export default function TechPassSection() {
                 value={formData.email || ""}
                 onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
                 placeholder="e.g., alex@vance.ai"
-                className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-3.5 py-2.5 font-inter text-xs text-white placeholder-white/40 focus:border-white/40 focus:outline-none"
+                className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-3.5 py-2.5 font-inter text-xs text-white placeholder-white/30 focus:border-white/30 focus:ring-1 focus:ring-white/10 focus:outline-none transition-colors"
               />
             </div>
           </div>

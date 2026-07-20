@@ -218,17 +218,34 @@ export default function CommunityHighlightsSection() {
   };
 
   return (
-    <section id="highlights" className="relative w-full py-16 sm:py-20 px-4 sm:px-8 bg-[#030509] overflow-hidden">
+    <section id="highlights" className="relative w-full py-20 sm:py-28 px-4 sm:px-8 bg-[#030509] overflow-hidden">
+      <div className="section-divider" />
+      {/* Ambient glow overlay */}
+      <div className="pointer-events-none absolute inset-0 section-ambient opacity-75" />
+
       {/* Header */}
-      <div className="relative z-10 mx-auto max-w-4xl text-center mb-10">
+      <div className="relative z-10 mx-auto max-w-4xl text-center mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.05 }}
+          className="mb-5 flex justify-center"
+        >
+          <span className="section-eyebrow">
+            <span className="h-1.5 w-1.5 rounded-full bg-white/60 animate-pulse" />
+            Community Highlights
+          </span>
+        </motion.div>
+
         <h2 className="font-jakarta text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">
-          Community{" "}
-          <span className="bg-gradient-to-b from-slate-200 via-slate-400 to-slate-500 bg-clip-text text-transparent">
-            Highlights
+          Moments That{" "}
+          <span className="headline-gradient">
+            Define Us
           </span>
         </h2>
 
-        <p className="mt-4 font-inter text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-normal">
+        <p className="mt-4 font-inter text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
           Explore our high-velocity hackathons, deep-dive technical workshops, and flagship open-source builds arranged along a cinematic 3D cylinder.
         </p>
 
@@ -240,8 +257,8 @@ export default function CommunityHighlightsSection() {
               onClick={() => setSelectedTab(cat)}
               className={`rounded-full border px-5 py-2 font-inter text-xs font-bold tracking-wider transition-all duration-300 ${
                 selectedTab === cat
-                  ? "border-white bg-white/20 text-white shadow-md scale-105"
-                  : "border-white/10 bg-white/[0.03] text-white/60 hover:border-white/25 hover:bg-white/10 hover:text-white"
+                  ? "border-white/40 bg-white/[0.1] text-white shadow-lg backdrop-blur-md scale-105"
+                  : "border-white/10 bg-white/[0.03] text-white/60 hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
               }`}
             >
               {cat.toUpperCase()}
@@ -259,8 +276,8 @@ export default function CommunityHighlightsSection() {
         {/* Navigation Controls Bar */}
         <div className="mb-8 flex items-center justify-between px-4 sm:px-8">
           <div className="flex items-center gap-2 font-inter text-xs font-semibold text-slate-400">
-            <span className="inline-block h-2 w-2 rounded-full bg-white/60 animate-ping" />
-            <span>{isPaused ? "PAUSED ON HOVER (CLICK ANY CARD TO BRING TO CENTER)" : "AUTO-ROTATING 3D CYLINDER ARC"}</span>
+            <span className="inline-block h-2 w-2 rounded-full bg-white/50 animate-pulse" />
+            <span>{isPaused ? "PAUSED — CLICK ANY CARD TO FOCUS" : "AUTO-ROTATING 3D CYLINDER ARC"}</span>
           </div>
 
           <div className="flex items-center gap-3">
@@ -408,8 +425,8 @@ export default function CommunityHighlightsSection() {
                         <span>EXPLORE HIGHLIGHT</span>
                       </a>
                     ) : (
-                      <span className="font-inter text-[11px] font-semibold text-slate-400/80 group-hover:text-white transition-colors">
-                        Click to Bring to Left Foreground →
+                    <span className="font-inter text-[11px] font-semibold text-slate-400/80 group-hover:text-white transition-colors">
+                        → CLICK TO FOCUS
                       </span>
                     )}
 
