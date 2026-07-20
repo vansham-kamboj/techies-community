@@ -6,7 +6,6 @@ import {
   HelpCircle,
   Plus,
   Minus,
-  Sparkles,
   Users,
   Calendar,
   Key,
@@ -232,35 +231,31 @@ export default function FuturisticFAQSection() {
   };
 
   return (
-    <section className="relative min-h-screen w-full py-24 sm:py-32 px-6 sm:px-10 section-gradient-bg border-t border-white/[0.06] overflow-hidden">
-      {/* Background aurora glow mesh */}
-      <div className="pointer-events-none absolute inset-0 z-0 aurora-mesh opacity-50" />
-      <div className="pointer-events-none absolute inset-0 z-0 aurora-vignette opacity-80" />
-
-      {/* Main Two-Column Layout (40% / 60% on desktop) */}
-      <div className="relative z-10 max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-        {/* Left Column (5 columns = ~40%): Label, Heading, Text, Category Switchers */}
-        <div className="col-span-1 lg:col-span-5 flex flex-col items-start text-left lg:sticky lg:top-32">
+    <section className="relative min-h-[85vh] w-full py-14 sm:py-16 px-6 sm:px-10 bg-[#030509] border-t border-white/[0.06] overflow-hidden">
+      {/* Main Two-Column Layout (40% / 60% on desktop) - compact gap and sizing */}
+      <div className="relative z-10 max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        {/* Left Column (5 columns = ~40%): Label, Compact Heading, Text, Category Switchers */}
+        <div className="col-span-1 lg:col-span-5 flex flex-col items-start text-left lg:sticky lg:top-24">
           {/* Eyebrow Label */}
-          <div className="section-eyebrow mb-5">
-            <HelpCircle className="h-3.5 w-3.5 text-slate-300 animate-pulse" />
+          <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[11px] font-semibold text-slate-300 tracking-wider uppercase mb-3">
+            <HelpCircle className="h-3 w-3 text-slate-400" />
             <span>GOT QUESTIONS?</span>
           </div>
 
-          {/* Large Heading */}
-          <h2 className="font-jakarta text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
+          {/* Compact Main Heading */}
+          <h2 className="font-jakarta text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-snug">
             Everything You <br className="hidden sm:block" />
             Need To Know <br className="hidden sm:block" />
-            <span className="headline-gradient">About Techies.</span>
+            <span className="text-slate-300">About Techies.</span>
           </h2>
 
           {/* Supporting Text */}
-          <p className="mt-5 font-inter text-base sm:text-lg text-slate-300/90 leading-relaxed max-w-md">
+          <p className="mt-3 font-inter text-sm sm:text-base text-slate-300/90 leading-relaxed max-w-md">
             Explore our high-agency culture, decentralized chapter model, TechPass digital credential perks, and zero-to-one engineering philosophy.
           </p>
 
-          {/* Category Switcher Tabs */}
-          <div className="mt-8 flex flex-wrap lg:flex-col gap-2.5 w-full">
+          {/* Category Switcher Tabs - Compact & Clean */}
+          <div className="mt-5 flex flex-wrap lg:flex-col gap-2 w-full">
             {CATEGORIES.map((cat) => {
               const Icon = cat.icon;
               const isActive = activeCategory === cat.label;
@@ -273,34 +268,22 @@ export default function FuturisticFAQSection() {
                     const firstItem = FAQ_DATA.find((i) => i.category === cat.label);
                     if (firstItem) setOpenCardId(firstItem.id);
                   }}
-                  className={`group relative flex items-center gap-3 px-4 py-3 rounded-xl font-inter text-sm font-semibold transition-all duration-300 text-left cursor-pointer focus:outline-none ${
+                  className={`group relative flex items-center gap-2.5 px-3.5 py-2 rounded-lg font-inter text-xs sm:text-sm font-semibold transition-all duration-300 text-left cursor-pointer focus:outline-none ${
                     isActive
-                      ? "text-white shadow-glass-md"
-                      : "text-slate-400 hover:text-slate-200 hover:bg-white/[0.03]"
+                      ? "text-white bg-white/[0.08] border border-white/20"
+                      : "text-slate-400 hover:text-slate-200 hover:bg-white/[0.03] border border-transparent"
                   }`}
                 >
-                  {/* Active background pill */}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeCategoryPill"
-                      className="absolute inset-0 rounded-xl border border-white/25 bg-white/[0.08] backdrop-blur-xl -z-10"
-                      transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                    />
-                  )}
                   <div
-                    className={`flex h-8 w-8 items-center justify-center rounded-lg transition-colors ${
-                      isActive ? "bg-white text-neutral-950 shadow-sm" : "bg-white/[0.05] text-slate-300"
+                    className={`flex h-6 w-6 items-center justify-center rounded transition-colors ${
+                      isActive ? "bg-white text-neutral-950" : "bg-white/[0.05] text-slate-300"
                     }`}
                   >
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-3.5 w-3.5" />
                   </div>
                   <span className="tracking-wide">{cat.label}</span>
                   {isActive && (
-                    <motion.span
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="ml-auto h-2 w-2 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"
-                    />
+                    <span className="ml-auto h-1.5 w-1.5 rounded-full bg-white" />
                   )}
                 </button>
               );
@@ -308,40 +291,40 @@ export default function FuturisticFAQSection() {
           </div>
         </div>
 
-        {/* Right Column (7 columns = ~60%): Expandable Floating FAQ Cards */}
-        <div className="col-span-1 lg:col-span-7 flex flex-col gap-4 w-full">
+        {/* Right Column (7 columns = ~60%): Expandable Compact FAQ Cards (Zero Glow) */}
+        <div className="col-span-1 lg:col-span-7 flex flex-col gap-3 w-full">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeCategory}
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.35 }}
-              className="flex flex-col gap-4"
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.25 }}
+              className="flex flex-col gap-3"
             >
               {filteredFAQs.map((faq, idx) => {
                 const isOpen = openCardId === faq.id;
                 return (
                   <motion.div
                     key={faq.id}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: idx * 0.08 }}
-                    className={`group relative overflow-hidden rounded-2xl border transition-all duration-300 backdrop-blur-xl ${
+                    transition={{ duration: 0.3, delay: idx * 0.05 }}
+                    className={`group relative overflow-hidden rounded-xl border transition-all duration-300 backdrop-blur-md ${
                       isOpen
-                        ? "border-white/30 bg-white/[0.07] shadow-glass-lg"
-                        : "border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.04]"
+                        ? "border-white/25 bg-white/[0.05]"
+                        : "border-white/10 bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.03]"
                     }`}
                   >
-                    {/* Animated glowing indicator line along the left border when open */}
+                    {/* Clean solid white indicator line along left border when open (no glow) */}
                     <AnimatePresence>
                       {isOpen && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "100%", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="absolute left-0 top-0 bottom-0 w-1 bg-white shadow-[0_0_12px_rgba(255,255,255,0.9)] z-20"
+                          transition={{ duration: 0.2 }}
+                          className="absolute left-0 top-0 bottom-0 w-1 bg-white z-20"
                         />
                       )}
                     </AnimatePresence>
@@ -349,23 +332,23 @@ export default function FuturisticFAQSection() {
                     {/* Question Header Button */}
                     <button
                       onClick={() => toggleCard(faq.id)}
-                      className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left cursor-pointer focus:outline-none"
+                      className="w-full flex items-center justify-between gap-3 p-4 sm:p-5 text-left cursor-pointer focus:outline-none"
                     >
                       <span
-                        className={`font-jakarta text-base sm:text-lg font-bold tracking-tight transition-colors ${
+                        className={`font-jakarta text-sm sm:text-base font-bold tracking-tight transition-colors ${
                           isOpen ? "text-white" : "text-slate-200 group-hover:text-white"
                         }`}
                       >
                         {faq.question}
                       </span>
                       <div
-                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border transition-all duration-300 ${
+                        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-all duration-300 ${
                           isOpen
-                            ? "border-white/30 bg-white text-neutral-950 rotate-180 shadow-md"
+                            ? "border-white/30 bg-white text-neutral-950 rotate-180"
                             : "border-white/10 bg-white/[0.04] text-slate-300 group-hover:border-white/20"
                         }`}
                       >
-                        {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                        {isOpen ? <Minus className="h-3.5 w-3.5" /> : <Plus className="h-3.5 w-3.5" />}
                       </div>
                     </button>
 
@@ -373,20 +356,13 @@ export default function FuturisticFAQSection() {
                     <AnimatePresence initial={false}>
                       {isOpen && (
                         <motion.div
-                          initial={{ height: 0, opacity: 0, filter: "blur(6px)" }}
-                          animate={{ height: "auto", opacity: 1, filter: "blur(0px)" }}
-                          exit={{ height: 0, opacity: 0, filter: "blur(6px)" }}
-                          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                         >
-                          <div className="px-5 pb-6 sm:px-6 sm:pb-7 pt-1 font-inter text-sm sm:text-base text-slate-300/90 leading-relaxed border-t border-white/[0.06] relative">
+                          <div className="px-4 pb-5 sm:px-5 sm:pb-6 pt-0.5 font-inter text-xs sm:text-sm text-slate-300/90 leading-relaxed border-t border-white/[0.06]">
                             {faq.answer}
-
-                            {/* Floating decorative particle when open */}
-                            <motion.div
-                              animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.7, 0.3] }}
-                              transition={{ duration: 3, repeat: Infinity }}
-                              className="absolute bottom-3 right-4 h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_6px_rgba(255,255,255,0.8)] pointer-events-none"
-                            />
                           </div>
                         </motion.div>
                       )}
