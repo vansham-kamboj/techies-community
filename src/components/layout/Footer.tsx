@@ -31,8 +31,16 @@ export default function Footer() {
           <div className="flex flex-col max-w-lg gap-6">
             {/* Brand mark */}
             <div>
-              <a href="/" className="font-jakarta text-xl font-bold tracking-tight text-white">
-                Techies<span className="text-slate-400 font-normal">Community</span>
+              <a href="/" className="group inline-flex items-center gap-2.5 font-jakarta text-xl font-bold tracking-tight text-white">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/logo.png"
+                  alt="Techies Community Logo"
+                  className="h-5 sm:h-[22px] w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                />
+                <span>
+                  Techies<span className="text-slate-400 font-normal">Community</span>
+                </span>
               </a>
               <p className="mt-2 font-inter text-sm text-slate-400 leading-relaxed max-w-xs">
                 For dreamers, builders, and innovators who choose to create their own path.

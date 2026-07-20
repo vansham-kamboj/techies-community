@@ -210,7 +210,7 @@ export default function TechPassSection() {
         <img
           src="/techpass-bg.png"
           alt="TechPass Space Background"
-          className="w-full h-full object-cover mix-blend-screen opacity-90 scale-105"
+          className="w-full h-full object-cover mix-blend-screen opacity-20 scale-105"
         />
       </div>
 
